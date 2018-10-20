@@ -4,7 +4,7 @@
 
     <groupId>de.moritzrupp.contractview</groupId>
     <artifactId>contractview</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>war</packaging>
     <name>ContractView</name>
     <description>With ContractView you get the overview of your all contracts!</description>
