@@ -1,5 +1,8 @@
-# contractview
+# ContractView
+
 This application was generated using JHipster 5.5.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.5.0](https://www.jhipster.tech/documentation-archive/v5.5.0).
+
+With ContractView you get the overview of your all contracts!
 
 ## Development
 

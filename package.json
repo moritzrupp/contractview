@@ -1,7 +1,7 @@
 {
-  "name": "contractview",
+  "name": "ContractView",
   "version": "0.0.0",
-  "description": "Description for contractview",
+  "description": "With contractview you get the overview of your all contracts!",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [

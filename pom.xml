@@ -6,7 +6,8 @@
     <artifactId>contractview</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Contractview</name>
+    <name>ContractView</name>
+    <description>With ContractView you get the overview of your all contracts!</description>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
