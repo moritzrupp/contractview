@@ -1,0 +1,23 @@
+
+{
+    "contractviewApp": {
+        "provider" : {
+            "home": {
+                "title": "Vertragsanbieter",
+                "createLabel": "Vertragsanbieter erstellen",
+                "createOrEditLabel": "Vertragsanbieter erstellen oder bearbeiten"
+            },
+            "created": "Vertragsanbieter erstellt mit ID {{ param }}",
+            "updated": "Vertragsanbieter aktualisiert mit ID {{ param }}",
+            "deleted": "Vertragsanbieter gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Vertragsanbieter {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Vertragsanbieter"
+            },
+            "name": "Name",
+            "website": "Website"
+        }
+    }
+}

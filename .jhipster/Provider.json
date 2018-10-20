@@ -1,0 +1,25 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "website",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20181020160758",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "provider",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}
