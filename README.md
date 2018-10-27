@@ -1,6 +1,8 @@
 # ContractView
 
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/moritzrupp/contractview.svg?columns=all)](https://waffle.io/moritzrupp/contractview)
+[![Build Status](https://dev.azure.com/moritzrupp/moritzrupp/_apis/build/status/moritzrupp.contractview)](https://dev.azure.com/moritzrupp/moritzrupp/_build/latest?definitionId=1)
+
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/moritzrupp/contractview.svg?columns=all)](https://waffle.io/moritzrupp/contractview) 
 
 With ContractView you get the overview of your all contracts!
 
