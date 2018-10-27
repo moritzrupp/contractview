@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- No changes unreleased
+### Added
+
+- Heroku deployment support with `jhipster heroku` sub-generator
 
 ## 0.1.0 - 2018-10-20
 
