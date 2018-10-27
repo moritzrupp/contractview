@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Heroku deployment support with `jhipster heroku` sub-generator
 - LICENSE file added and project licensed under GPL version 3
+- Setup file for Azure pipelines
 
 ### Changed
 
