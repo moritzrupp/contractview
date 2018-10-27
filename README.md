@@ -1,14 +1,24 @@
 # ContractView
 
-This application was generated using JHipster 5.5.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.5.0](https://www.jhipster.tech/documentation-archive/v5.5.0).
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/moritzrupp/contractview.svg?columns=all)](https://waffle.io/moritzrupp/contractview)
 
 With ContractView you get the overview of your all contracts!
+
+This project is currently in a very early stage of development. With the idea born, the plan is to add more and more features over time. If you are interested in collaborating 
+on this project, please see [below](#information-and-contact) for more information.
+
+There is currently no central place where is application is hosted. If you want to use it, feel free to host it yourself.
+
+## Technology stack
+
+The ContractView application is build with [JHipster]. JHipster is a great tool for creating new web applications based on [Spring Boot] and modern front-end frameworks like 
+[Angular] or [React]. There are many possibilities with JHipster. Please, make yourself familiar with it by browsing through the [JHipster documentation].
 
 ## Development
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
+1. [Node.js][]: The project uses Node to run a development web server and build the project.
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
 After installing Node, you should be able to run the following command to install development tools.
@@ -16,7 +26,7 @@ You will only need to run this command when dependencies change in [package.json
 
     npm install
 
-We use npm scripts and [Webpack][] as our build system.
+The project uses npm scripts and [Webpack][] as the build system.
 
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
@@ -30,44 +40,9 @@ Add the `help` flag on any command to see how you can use it. For example, `npm 
 
 The `npm run` command will list all of the scripts available to run for this project.
 
-### Service workers
-
-Service workers are commented by default, to enable them please uncomment the following code.
-
-* The service worker registering script in index.html
-
-```html
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-        .register('./service-worker.js')
-        .then(function() { console.log('Service Worker Registered'); });
-    }
-</script>
-```
-
-Note: workbox creates the respective service worker and dynamically generate the `service-worker.js`
-
-### Managing dependencies
-
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
-
-    npm install --save --save-exact leaflet
-
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
-
-    npm install --save-dev --save-exact @types/leaflet
-
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Note: there are still few other things remaining to do for Leaflet that we won't detail here.
-
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
-
-
-
 ## Building for production
 
-To optimize the contractview application for production, run:
+To optimize the ContractView application for production, run:
 
     ./mvnw -Pprod clean package
 
@@ -77,8 +52,6 @@ To ensure everything worked, run:
     java -jar target/*.war
 
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
-
-Refer to [Using JHipster in production][] for more details.
 
 ## Testing
 
@@ -92,9 +65,6 @@ Unit tests are run by [Jest][] and written with [Jasmine][]. They're located in 
 
     npm test
 
-
-
-For more information, refer to the [Running tests page][].
 
 ### Code quality
 
@@ -110,53 +80,43 @@ Then, run a Sonar analysis:
 ./mvnw -Pprod clean test sonar:sonar
 ```
 
-For more information, refer to the [Code quality page][].
+# Information and contact
 
-## Using Docker to simplify development (optional)
+This project was initiated by Moritz Rupp ([moritz.rupp@gmail.com](mailto:moritz.rupp@gmail.com)). For him, it was important to have an overview of of all his current contracts.
+ Most applications on the market either cost money or they combine the basic functionality with comparison and selling intentions. Moreover, he wanted to learn some cool 
+ technologies!
+ 
+ If you have any feedback or questions reagarding this application, please feel free to get in touch. Either create a [new issue] or send an [e-mail](mailto:moritz.rupp@gmail.com)!
 
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
+# License
 
-For example, to start a postgresql database in a docker container, run:
+Copyright (C) 2018 Moritz Rupp
 
-    docker-compose -f src/main/docker/postgresql.yml up -d
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-To stop it and remove the container, run:
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    docker-compose -f src/main/docker/postgresql.yml down
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
+See [LICENSE](LICENSE) to see the full text.
 
-    ./mvnw package -Pprod jib:dockerBuild
-
-Then run:
-
-    docker-compose -f src/main/docker/app.yml up -d
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[JHipster Homepage and latest documentation]: https://www.jhipster.tech
-[JHipster 5.5.0 archive]: https://www.jhipster.tech/documentation-archive/v5.5.0
-
-[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v5.5.0/development/
-[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v5.5.0/docker-compose
-[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v5.5.0/production/
-[Running tests page]: https://www.jhipster.tech/documentation-archive/v5.5.0/running-tests/
-[Code quality page]: https://www.jhipster.tech/documentation-archive/v5.5.0/code-quality/
-[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v5.5.0/setting-up-ci/
+[JHipster]: https://www.jhipster.tech
+[JHipster documentation]: https://www.jhipster.tech/documentation-archive/v5.5.0/
+[Spring Boot]: https://spring.io/projects/spring-boot
+[Angular]: https://angular.io/
+[React]: https://reactjs.org/
 
 
 [Node.js]: https://nodejs.org/
-[Yarn]: https://yarnpkg.org/
 [Webpack]: https://webpack.github.io/
-[Angular CLI]: https://cli.angular.io/
-[BrowserSync]: http://www.browsersync.io/
 [Jest]: https://facebook.github.io/jest/
 [Jasmine]: http://jasmine.github.io/2.0/introduction.html
-[Protractor]: https://angular.github.io/protractor/
-[Leaflet]: http://leafletjs.com/
-[DefinitelyTyped]: http://definitelytyped.org/
+
+[new issue]: https://github.com/moritzrupp/contractview/issues/new

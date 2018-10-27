@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Heroku deployment support with `jhipster heroku` sub-generator
+- LICENSE file added and project licensed under GPL version 3
+
+### Changed
+
+- README updated with relevant content, license information and waffle.io badge
 
 ## 0.1.0 - 2018-10-20
 
