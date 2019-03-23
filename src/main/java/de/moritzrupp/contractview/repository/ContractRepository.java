@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,8 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
 
     @Query("select contract from Contract contract where contract.owner.login = ?#{principal.username}")
     List<Contract> findByOwnerIsCurrentUser();
+
+    List<Contract> findAllByContractEndIsBetween(@Param("start") Instant start, @Param("end") Instant end);
 
     @Query(value = "select distinct contract from Contract contract left join fetch contract.users",
         countQuery = "select count(distinct contract) from Contract contract")

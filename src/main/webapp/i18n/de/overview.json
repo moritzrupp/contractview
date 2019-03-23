@@ -1,0 +1,12 @@
+{
+  "overview": {
+    "title": "Vertragsübersicht",
+    "calendar": {
+      "today": "Heute",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "month": "Monat",
+      "agenda": "Agenda"
+    }
+  }
+}

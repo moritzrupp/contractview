@@ -20,6 +20,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,17 +89,39 @@ public class ContractResource {
      *
      * @param pageable the pagination information
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
+     * @param startDate the start date for filtering in the format YYYY-MM-DDTHH:mm:ss.TTT. If set, eagerload must be
+     *                 false
+     * @param endDate the end date for filtering in the format YYYY-MM-DDTHH:mm:ss.TTT. If set, eagerload must be false
      * @return the ResponseEntity with status 200 (OK) and the list of contracts in body
+     * @throws BadRequestAlertException if the startDate or endDate are malformatted
      */
     @GetMapping("/contracts")
     @Timed
-    public ResponseEntity<List<Contract>> getAllContracts(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Contract>> getAllContracts(Pageable pageable, @RequestParam(required = false,
+                defaultValue = "false") boolean eagerload, @RequestParam(required = false) String startDate,
+                @RequestParam(required = false) String endDate) {
+
         log.debug("REST request to get a page of Contracts");
         Page<Contract> page;
         if (eagerload) {
             page = contractRepository.findAllWithEagerRelationships(pageable);
         } else {
-            page = contractRepository.findAll(pageable);
+            if (startDate != null && !"null".equals(startDate) && endDate != null && !"null".equals(endDate)) {
+                try {
+                    Instant start = Instant.parse(startDate);
+                    Instant end = Instant.parse(endDate);
+                    log.debug("Filter Contracts between " + start.toString() + " and " + end.toString());
+                    return ResponseEntity.ok(contractRepository.findAllByContractEndIsBetween(start, end));
+                }
+                catch (DateTimeParseException ex) {
+                    throw new BadRequestAlertException("The dates " + startDate + "/" + endDate + " must represent " +
+                        "valid instants in UTC and are parsed using DateTimeFormatter.ISO_INSTANT", ENTITY_NAME,
+                        "dateformat");
+                }
+            }
+            else {
+                page = contractRepository.findAll(pageable);
+            }
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/contracts?eagerload=%b", eagerload));
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);

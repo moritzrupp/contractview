@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -389,6 +390,27 @@ public class ContractResourceIntTest {
         .andExpect(status().isOk());
 
             verify(contractRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @Test
+    @Transactional
+    public void getAllContractsWithContractEndIsBetween() throws Exception {
+        Instant start = Instant.now();
+        Instant end = Instant.now().plus(2, ChronoUnit.DAYS);
+
+        restContractMockMvc.perform(get("/api/contracts?startDate=" + start + "&endDate=" + end))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    public void getAllContractsWithInvalidContractEndIsBetween() throws Exception {
+        String start = "2019-03-23";
+        Instant end = Instant.now().plus(2, ChronoUnit.DAYS);
+
+        restContractMockMvc.perform(get("/api/contracts?startDate=" + start
+            + "&endDate=" + DEFAULT_CONTRACT_END.plus(1, ChronoUnit.DAYS)))
+            .andExpect(status().isBadRequest());
     }
 
     @Test

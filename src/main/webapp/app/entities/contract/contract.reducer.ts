@@ -5,8 +5,10 @@ import {
   ICrudGetAction,
   ICrudGetAllAction,
   ICrudPutAction,
-  ICrudDeleteAction
+  ICrudDeleteAction,
+  log
 } from 'react-jhipster';
+import { ICrudGetAllBetweenAction } from 'app/shared/reducers/action-type';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -15,6 +17,7 @@ import { IContract, defaultValue } from 'app/shared/model/contract.model';
 
 export const ACTION_TYPES = {
   FETCH_CONTRACT_LIST: 'contract/FETCH_CONTRACT_LIST',
+  FETCH_CONTRACT_BETWEEN_LIST: 'contract/FETCH_CONTRACT_BETWEEN_LIST',
   FETCH_CONTRACT: 'contract/FETCH_CONTRACT',
   CREATE_CONTRACT: 'contract/CREATE_CONTRACT',
   UPDATE_CONTRACT: 'contract/UPDATE_CONTRACT',
@@ -40,6 +43,7 @@ export type ContractState = Readonly<typeof initialState>;
 export default (state: ContractState = initialState, action): ContractState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_CONTRACT_LIST):
+    case REQUEST(ACTION_TYPES.FETCH_CONTRACT_BETWEEN_LIST):
     case REQUEST(ACTION_TYPES.FETCH_CONTRACT):
       return {
         ...state,
@@ -57,6 +61,7 @@ export default (state: ContractState = initialState, action): ContractState => {
         updating: true
       };
     case FAILURE(ACTION_TYPES.FETCH_CONTRACT_LIST):
+    case FAILURE(ACTION_TYPES.FETCH_CONTRACT_BETWEEN_LIST):
     case FAILURE(ACTION_TYPES.FETCH_CONTRACT):
     case FAILURE(ACTION_TYPES.CREATE_CONTRACT):
     case FAILURE(ACTION_TYPES.UPDATE_CONTRACT):
@@ -76,6 +81,12 @@ export default (state: ContractState = initialState, action): ContractState => {
         loading: false,
         totalItems: action.payload.headers['x-total-count'],
         entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links)
+      };
+    case SUCCESS(ACTION_TYPES.FETCH_CONTRACT_BETWEEN_LIST):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_CONTRACT):
       return {
@@ -116,6 +127,14 @@ export const getEntities: ICrudGetAllAction<IContract> = (page, size, sort) => {
   return {
     type: ACTION_TYPES.FETCH_CONTRACT_LIST,
     payload: axios.get<IContract>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getEntitiesBetween: ICrudGetAllBetweenAction<IContract> = (startDate, endDate, sort) => {
+  const requestUrl = `${apiUrl}?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}${sort ? `?&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_CONTRACT_BETWEEN_LIST,
+    payload: axios.get<IContract>(`${requestUrl}&cacheBuster=${new Date().getTime()}`)
   };
 };
 

@@ -45,3 +45,14 @@ export const Home = props => (
     </NavLink>
   </NavItem>
 );
+
+export const Overview = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/overview" className="d-flex align-items-center">
+      <FontAwesomeIcon icon="calendar-check" />
+      <span>
+        <Translate contentKey="global.menu.overview">Overview</Translate>
+      </span>
+    </NavLink>
+  </NavItem>
+);
