@@ -17,7 +17,6 @@ import { getEntitiesBetween } from 'app/entities/contract/contract.reducer';
 export interface IOverviewProp extends StateProps, DispatchProps {}
 
 export class Overview extends React.Component<IOverviewProp> {
-
   localizer = BigCalendar.momentLocalizer(moment);
 
   componentDidMount() {
@@ -27,12 +26,13 @@ export class Overview extends React.Component<IOverviewProp> {
 
   getEntities = currentDate => {
     log('currentDate: ', currentDate);
-    this.props.getEntitiesBetween(moment(dates.firstVisibleDay(currentDate, this.localizer)),
-      moment(dates.lastVisibleDay(currentDate, this.localizer)));
+    this.props.getEntitiesBetween(
+      moment(dates.firstVisibleDay(currentDate, this.localizer)),
+      moment(dates.lastVisibleDay(currentDate, this.localizer))
+    );
   };
 
   onNavigate = date => {
-
     this.getEntities(date);
   };
 
@@ -50,7 +50,6 @@ export class Overview extends React.Component<IOverviewProp> {
             <BigCalendar
               events={eventList}
               views={['month', 'week', 'day', 'agenda']}
-              showMultiDayTimes
               localizer={this.localizer}
               messages={{
                 previous: translate('overview.calendar.previous'),
@@ -61,11 +60,12 @@ export class Overview extends React.Component<IOverviewProp> {
               }}
               culture={locale}
               onNavigate={this.onNavigate}
+              popup
             />
           </div>
         </Col>
       </Row>
-  );
+    );
   }
 }
 
