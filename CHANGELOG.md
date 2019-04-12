@@ -11,13 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Heroku deployment support with `jhipster heroku` sub-generator
 - LICENSE file added and project licensed under GPL version 3
-- Setup file for Azure pipelines
+- Setup file for Travis CI
 
 ### Changed
 
-- README updated with relevant content, license information and waffle.io badge
+- README updated with relevant content, license information, Travis CI and SonarCloud badges
 
-## 0.1.0 - 2018-10-20
+## [0.1.0] - 2018-10-20
 
 ### Added
 
@@ -26,3 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bootswatch Lux theme instead of standard jhipster theme
 - This CHANGELOG file to hopefully serve as an evolving example of a
   standardized open source project CHANGELOG.
+
+[Unreleased]: https://github.com/moritzrupp/contractview/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/moritzrupp/contractview/releases/tag/0.1.0
