@@ -9,7 +9,7 @@ import moment from 'moment';
 
 import { Translate, translate, log } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col, Alert } from 'reactstrap';
+import { Row, Col, Alert, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import { getSession } from 'app/shared/reducers/authentication';
 
@@ -17,10 +17,20 @@ import { getEntitiesBetween } from 'app/entities/contract/contract.reducer';
 
 export interface IOverviewProp extends StateProps, DispatchProps {}
 
+const defaultEventPopover = {
+  popoverTarget: null,
+  eventTitle: null,
+  eventProvider: null,
+  eventStart: null,
+  eventEnd: null
+};
+
 export class Overview extends React.Component<IOverviewProp> {
   localizer = BigCalendar.momentLocalizer(moment);
+
   state = {
-    eventId: null
+    eventId: null,
+    eventPopover: defaultEventPopover
   };
 
   componentDidMount() {
@@ -47,11 +57,52 @@ export class Overview extends React.Component<IOverviewProp> {
     });
   };
 
+  onSelectEvent = (event, e) => {
+    if (e.currentTarget === this.state.eventPopover.popoverTarget) {
+      this.setState({
+        ...this.state,
+        eventPopover: defaultEventPopover
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        eventPopover: {
+          popoverTarget: e.currentTarget,
+          eventTitle: event.title,
+          eventProvider: event.provider,
+          eventStart: event.start,
+          eventEnd: event.end
+        }
+      });
+    }
+  };
+
   render() {
     const { locale, eventList } = this.props;
+    moment.locale(locale);
 
     if (this.state.eventId !== null) {
       return <Redirect push to={`/entity/contract/${this.state.eventId}`} />;
+    }
+
+    let popover;
+
+    if (this.state.eventPopover.popoverTarget !== null) {
+      popover = (
+        <Popover placement={'top'} isOpen target={this.state.eventPopover.popoverTarget}>
+          <PopoverHeader>{this.state.eventPopover.eventTitle}</PopoverHeader>
+          <PopoverBody>
+            <Row>
+              <Col>{this.state.eventPopover.eventProvider}</Col>
+            </Row>
+            <Row>
+              <Col>
+                {moment(this.state.eventPopover.eventStart).format('LL')}-{moment(this.state.eventPopover.eventEnd).format('LL')}
+              </Col>
+            </Row>
+          </PopoverBody>
+        </Popover>
+      );
     }
 
     return (
@@ -61,6 +112,7 @@ export class Overview extends React.Component<IOverviewProp> {
             <Translate contentKey="overview.title">Contract Overview</Translate>
           </h2>
 
+          {popover}
           <div className="rbc-calendar">
             <BigCalendar
               events={eventList}
@@ -88,6 +140,7 @@ export class Overview extends React.Component<IOverviewProp> {
               onNavigate={this.onNavigate}
               popup
               onDoubleClickEvent={this.onDoubleClick}
+              onSelectEvent={this.onSelectEvent}
             />
           </div>
         </Col>
@@ -103,6 +156,7 @@ const mapStateToProps = storeState => ({
   eventList: storeState.contract.entities.map(contract => ({
     id: contract.id,
     title: contract.name,
+    provider: contract.provider.name,
     start: contract.contractEnd,
     end: contract.contractEnd,
     allDay: true
