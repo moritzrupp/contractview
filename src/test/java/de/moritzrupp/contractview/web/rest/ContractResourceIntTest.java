@@ -398,7 +398,7 @@ public class ContractResourceIntTest {
         Instant start = Instant.now();
         Instant end = Instant.now().plus(2, ChronoUnit.DAYS);
 
-        restContractMockMvc.perform(get("/api/contracts?startDate=" + start + "&endDate=" + end))
+        restContractMockMvc.perform(get("/api/contracts/events?rangeStart=" + start + "&rangeEnd=" + end))
             .andExpect(status().isOk());
     }
 
@@ -408,8 +408,8 @@ public class ContractResourceIntTest {
         String start = "2019-03-23";
         Instant end = Instant.now().plus(2, ChronoUnit.DAYS);
 
-        restContractMockMvc.perform(get("/api/contracts?startDate=" + start
-            + "&endDate=" + DEFAULT_CONTRACT_END.plus(1, ChronoUnit.DAYS)))
+        restContractMockMvc.perform(get("/api/contracts/events?rangeStart=" + start
+            + "&rangeEnd=" + DEFAULT_CONTRACT_END.plus(1, ChronoUnit.DAYS)))
             .andExpect(status().isBadRequest());
     }
 

@@ -130,8 +130,10 @@ export const getEntities: ICrudGetAllAction<IContract> = (page, size, sort) => {
   };
 };
 
-export const getEntitiesBetween: ICrudGetAllBetweenAction<IContract> = (startDate, endDate, sort) => {
-  const requestUrl = `${apiUrl}?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}${sort ? `?&sort=${sort}` : ''}`;
+export const getEntitiesBetween: ICrudGetAllBetweenAction<IContract> = (rangeStart, rangeEnd, sort) => {
+  const requestUrl = `${apiUrl}/events?rangeStart=${rangeStart.toISOString()}&rangeEnd=${rangeEnd.toISOString()}${
+    sort ? `?&sort=${sort}` : ''
+  }`;
   return {
     type: ACTION_TYPES.FETCH_CONTRACT_BETWEEN_LIST,
     payload: axios.get<IContract>(`${requestUrl}&cacheBuster=${new Date().getTime()}`)
