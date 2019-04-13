@@ -6,7 +6,19 @@
       "previous": "Zurück",
       "next": "Weiter",
       "month": "Monat",
-      "agenda": "Agenda"
+      "agenda": "Agenda",
+      "week": "Woche",
+      "Day": "Tag",
+      "noeventsinrange": "In dieser Zeitspanne liegen keine Ereignisse.",
+      "date": "Datum",
+      "time": "Zeit",
+      "event": "Ereignis",
+      "allDay": "Ganzer Tag",
+      "work_week": "Arbeitswoche",
+      "day": "Tag",
+      "yesterday": "Gestern",
+      "tomorrow": "Morgen",
+      "showMore": "{{ count }} mehr"
     }
   }
 }

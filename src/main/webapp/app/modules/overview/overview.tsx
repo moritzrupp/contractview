@@ -52,11 +52,22 @@ export class Overview extends React.Component<IOverviewProp> {
               views={['month', 'week', 'day', 'agenda']}
               localizer={this.localizer}
               messages={{
+                date: translate('overview.calendar.date'),
+                time: translate('overview.calendar.time'),
+                event: translate('overview.calendar.event'),
+                allDay: translate('overview.calendar.allDay'),
+                week: translate('overview.calendar.week'),
+                work_week: translate('overview.calendar.work_week'),
+                day: translate('overview.calendar.week'),
+                month: translate('overview.calendar.month'),
                 previous: translate('overview.calendar.previous'),
                 next: translate('overview.calendar.next'),
+                yesterday: translate('overview.calendar.yesterday'),
+                tomorrow: translate('overview.calendar.tomorrow'),
                 today: translate('overview.calendar.today'),
-                month: translate('overview.calendar.month'),
-                agenda: translate('overview.calendar.agenda')
+                agenda: translate('overview.calendar.agenda'),
+                showMore: count => translate('overview.calendar.showmore', { count }),
+                noEventsInRange: translate('overview.calendar.noeventsinrange')
               }}
               culture={locale}
               onNavigate={this.onNavigate}
