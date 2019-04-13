@@ -20,6 +20,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,19 +90,48 @@ public class ContractResource {
      * @param pageable the pagination information
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of contracts in body
+     * @throws BadRequestAlertException if the startDate or endDate are malformatted
      */
     @GetMapping("/contracts")
     @Timed
     public ResponseEntity<List<Contract>> getAllContracts(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+
         log.debug("REST request to get a page of Contracts");
         Page<Contract> page;
         if (eagerload) {
             page = contractRepository.findAllWithEagerRelationships(pageable);
-        } else {
+        }
+        else {
             page = contractRepository.findAll(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/contracts?eagerload=%b", eagerload));
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET /contracts/events : get all contracts as events, where the contract end date is between a date range.
+     *
+     * @param rangeStart the start date for filtering in the format YYYY-MM-DDTHH:mm:ss.TTT
+     * @param rangeEnd the end date for filtering in the format YYYY-MM-DDTHH:mm:ss.TTT
+     * @return the ResponseEntity with status 200 (OK) and the list of contracts in body
+     * @throws BadRequestAlertException if the startDate or endDate are malformatted
+     */
+    @GetMapping("/contracts/events")
+    @Timed
+    public ResponseEntity<List<Contract>> getContractEvents(@RequestParam String rangeStart, @RequestParam String rangeEnd) {
+
+        log.debug("REST request to get the contracts of a month as events");
+        try {
+            Instant start = Instant.parse(rangeStart);
+            Instant end = Instant.parse(rangeEnd);
+            log.debug("Filter Contracts' end date between " + start.toString() + " and " + end.toString());
+            return ResponseEntity.ok(contractRepository.findAllByContractEndIsBetween(start, end));
+        }
+        catch (DateTimeParseException ex) {
+            throw new BadRequestAlertException("The dates " + rangeStart + "/" + rangeEnd + " must represent " +
+                "valid instants in UTC and are parsed using DateTimeFormatter.ISO_INSTANT", ENTITY_NAME,
+                "dateformat");
+        }
     }
 
     /**

@@ -1,0 +1,24 @@
+{
+  "overview": {
+    "title": "Contract Overview",
+    "calendar": {
+      "today": "Today",
+      "previous": "Back",
+      "next": "Next",
+      "month": "Month",
+      "agenda": "Agenda",
+      "week": "Week",
+      "day": "Day",
+      "noeventsinrange": "There are no events in this range.",
+      "date": "Date",
+      "time": "Time",
+      "event": "Event",
+      "allDay": "All day",
+      "work_week": "Work week",
+      "day": "Day",
+      "yesterday": "Yesterday",
+      "tomorrow": "Tomorrow",
+      "showMore": "{{ count }} more"
+    }
+  }
+}
