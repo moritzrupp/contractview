@@ -2,6 +2,7 @@ import './overview.scss';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import React from 'react';
+import { Redirect } from 'react-router';
 import BigCalendar from 'react-big-calendar';
 import dates from 'react-big-calendar/lib/utils/dates';
 import moment from 'moment';
@@ -18,6 +19,9 @@ export interface IOverviewProp extends StateProps, DispatchProps {}
 
 export class Overview extends React.Component<IOverviewProp> {
   localizer = BigCalendar.momentLocalizer(moment);
+  state = {
+    eventId: null
+  };
 
   componentDidMount() {
     this.props.getSession();
@@ -36,8 +40,19 @@ export class Overview extends React.Component<IOverviewProp> {
     this.getEntities(date);
   };
 
+  onDoubleClick = (event, e) => {
+    this.setState({
+      ...this.state,
+      eventId: event.id
+    });
+  };
+
   render() {
     const { locale, eventList } = this.props;
+
+    if (this.state.eventId !== null) {
+      return <Redirect push to={`/entity/contract/${this.state.eventId}`} />;
+    }
 
     return (
       <Row>
@@ -72,6 +87,7 @@ export class Overview extends React.Component<IOverviewProp> {
               culture={locale}
               onNavigate={this.onNavigate}
               popup
+              onDoubleClickEvent={this.onDoubleClick}
             />
           </div>
         </Col>
@@ -85,6 +101,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated,
   locale: storeState.locale.currentLocale,
   eventList: storeState.contract.entities.map(contract => ({
+    id: contract.id,
     title: contract.name,
     start: contract.contractEnd,
     end: contract.contractEnd,
