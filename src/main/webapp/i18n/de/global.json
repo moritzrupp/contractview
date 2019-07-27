@@ -133,7 +133,9 @@
         "emailexists": "Email wird bereits verwendet!",
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben",
         "idnull": "Ungültige ID",
-        "dateformat": "Ungültiges Datumsformat"
+        "dateformat": "Ungültiges Datumsformat",
+        "monthformat": "Ungültiges Monatsformat",
+        "yearformat": "Ungültiges Jahresformat"
     },
     "footer": "Dies ist Ihre Fußzeile"
 }
