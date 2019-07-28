@@ -12,6 +12,7 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
+import event, { EventState } from 'app/entities/contract/event.reducer';
 // prettier-ignore
 import contract, {
   ContractState
@@ -34,6 +35,7 @@ export interface IRootState {
   readonly password: PasswordState;
   readonly settings: SettingsState;
   readonly contract: ContractState;
+  readonly event: EventState;
   readonly provider: ProviderState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
@@ -51,6 +53,7 @@ const rootReducer = combineReducers<IRootState>({
   password,
   settings,
   contract,
+  event,
   provider,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar

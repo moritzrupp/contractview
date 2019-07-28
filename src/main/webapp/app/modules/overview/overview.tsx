@@ -7,13 +7,13 @@ import BigCalendar from 'react-big-calendar';
 import dates from 'react-big-calendar/lib/utils/dates';
 import moment from 'moment';
 
-import { Translate, translate, log } from 'react-jhipster';
+import { Translate, translate } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col, Alert, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Row, Col, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import { getSession } from 'app/shared/reducers/authentication';
-
-import { getEntitiesBetween } from 'app/entities/contract/contract.reducer';
+import { getEntities } from 'app/entities/contract/event.reducer';
+import { IRootState } from 'app/shared/reducers';
 
 export interface IOverviewProp extends StateProps, DispatchProps {}
 
@@ -35,18 +35,19 @@ export class Overview extends React.Component<IOverviewProp> {
 
   componentDidMount() {
     this.props.getSession();
-    this.getEntities(moment());
+    this.getEntities(new Date());
   }
 
-  getEntities = currentDate => {
-    log('currentDate: ', currentDate);
-    this.props.getEntitiesBetween(
+  getEntities = (currentDate: Date) => {
+    this.props.getEntities(
+      currentDate.getFullYear().toString(),
+      null,
       moment(dates.firstVisibleDay(currentDate, this.localizer)),
       moment(dates.lastVisibleDay(currentDate, this.localizer))
     );
   };
 
-  onNavigate = date => {
+  onNavigate = (date: Date) => {
     this.getEntities(date);
   };
 
@@ -70,8 +71,8 @@ export class Overview extends React.Component<IOverviewProp> {
           popoverTarget: e.currentTarget,
           eventTitle: event.title,
           eventProvider: event.provider,
-          eventStart: event.start,
-          eventEnd: event.end
+          eventStart: event.contractStart,
+          eventEnd: event.contractEnd
         }
       });
     }
@@ -149,21 +150,18 @@ export class Overview extends React.Component<IOverviewProp> {
   }
 }
 
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated,
-  locale: storeState.locale.currentLocale,
-  eventList: storeState.contract.entities.map(contract => ({
-    id: contract.id,
-    title: contract.name,
-    provider: contract.provider.name,
-    start: contract.contractEnd,
-    end: contract.contractEnd,
+const mapStateToProps = ({ locale, event }: IRootState) => ({
+  locale: locale.currentLocale,
+  eventList: event.entities.map(c => ({
+    id: c.id,
+    title: c.title,
+    start: c.contractEnd,
+    end: c.contractEnd,
     allDay: true
   }))
 });
 
-const mapDispatchToProps = { getSession, getEntitiesBetween };
+const mapDispatchToProps = { getSession, getEntities };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
