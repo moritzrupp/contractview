@@ -117,7 +117,7 @@ export class Overview extends React.Component<IOverviewProp> {
           <div className="rbc-calendar">
             <BigCalendar
               events={eventList}
-              views={['month', 'week', 'day', 'agenda']}
+              views={['month', 'week', 'agenda']}
               localizer={this.localizer}
               messages={{
                 date: translate('overview.calendar.date'),
@@ -126,7 +126,7 @@ export class Overview extends React.Component<IOverviewProp> {
                 allDay: translate('overview.calendar.allDay'),
                 week: translate('overview.calendar.week'),
                 work_week: translate('overview.calendar.work_week'),
-                day: translate('overview.calendar.week'),
+                day: translate('overview.calendar.day'),
                 month: translate('overview.calendar.month'),
                 previous: translate('overview.calendar.previous'),
                 next: translate('overview.calendar.next'),
