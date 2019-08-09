@@ -2,20 +2,15 @@ package de.moritzrupp.contractview.web.rest;
 
 import de.moritzrupp.contractview.ContractviewApp;
 import de.moritzrupp.contractview.domain.Contract;
-import de.moritzrupp.contractview.domain.Provider;
-import de.moritzrupp.contractview.domain.User;
 import de.moritzrupp.contractview.repository.ContractRepository;
 import de.moritzrupp.contractview.service.EventService;
-import de.moritzrupp.contractview.service.dto.EventDTO;
 import de.moritzrupp.contractview.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,17 +19,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.*;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalField;
-import java.util.List;
 
 import static de.moritzrupp.contractview.web.rest.TestUtil.createFormattingConversionService;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
  * Test class for the EventResource REST controller.
@@ -91,13 +81,44 @@ public class EventResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllEventsFromCurrentYear() throws Exception {
+    public void getAllEvents() throws Exception {
+
+        contractRepository.saveAndFlush(contract);
+
+        restEventMockMvc.perform(get("/api/events?from={from}&to={to}", contract.getContractStart().minus(1, ChronoUnit.DAYS),
+            contract.getContractEnd().plus(1, ChronoUnit.DAYS)))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+    }
+
+    @Test
+    @Transactional
+    public void failWithMissingFromParameter() throws Exception {
+
+        contractRepository.saveAndFlush(contract);
+
+        restEventMockMvc.perform(get("/api/events?to={to}", contract.getContractEnd().plus(1, ChronoUnit.DAYS)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void failWithMissingToParameter() throws Exception {
+
+        contractRepository.saveAndFlush(contract);
+
+        restEventMockMvc.perform(get("/api/events?from={from}", contract.getContractStart().minus(1, ChronoUnit.DAYS)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void failWithMissingParameters() throws Exception {
 
         contractRepository.saveAndFlush(contract);
 
         restEventMockMvc.perform(get("/api/events"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -106,7 +127,8 @@ public class EventResourceIntTest {
 
         contractRepository.saveAndFlush(contract);
 
-        restEventMockMvc.perform(get("/api/events/{year}", LocalDateTime.ofInstant(contract.getContractEnd(), ZoneId.systemDefault()).getYear()))
+        restEventMockMvc.perform(get("/api/events?from={from}&to={to}", contract.getContractStart().minus(1, ChronoUnit.DAYS),
+            contract.getContractEnd().plus(1, ChronoUnit.DAYS)))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -115,47 +137,5 @@ public class EventResourceIntTest {
             .andExpect(jsonPath("$.[*].provider").value(hasItem(contract.getProvider().getName())))
             .andExpect(jsonPath("$.[*].contractStart").value(hasItem(contract.getContractStart().toString())))
             .andExpect(jsonPath("$.[*].contractEnd").value(hasItem(contract.getContractEnd().toString())));
-    }
-
-    @Test
-    @Transactional
-    public void getAllEventsFromLastYear() throws Exception {
-
-        contractRepository.saveAndFlush(contract);
-
-        restEventMockMvc.perform(get("/api/events/{year}", ZonedDateTime.now().minusYears(1).getYear()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
-    }
-
-    @Test
-    @Transactional
-    public void getAllEventsFromLastYearFebruary() throws Exception {
-
-        contractRepository.saveAndFlush(contract);
-
-        restEventMockMvc.perform(get("/api/events/{year}/02", ZonedDateTime.now().minusYears(1).getYear()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
-    }
-
-    @Test
-    @Transactional
-    public void checkEventsWithInvalidYear() throws Exception {
-
-        contractRepository.saveAndFlush(contract);
-
-        restEventMockMvc.perform(get("/api/events/200"))
-            .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @Transactional
-    public void checkEventsWithInvalidMonth() throws Exception {
-
-        contractRepository.saveAndFlush(contract);
-
-        restEventMockMvc.perform(get("/api/events/{year}/13", ZonedDateTime.now().minusYears(1).getYear()))
-            .andExpect(status().isBadRequest());
     }
 }

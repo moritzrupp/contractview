@@ -134,8 +134,9 @@
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben",
         "idnull": "Ungültige ID",
         "dateformat": "Ungültiges Datumsformat",
-        "monthformat": "Ungültiges Monatsformat",
-        "yearformat": "Ungültiges Jahresformat"
+      "monthformat": "Ungültiges Monatsformat",
+      "yearformat": "Ungültiges Jahresformat",
+      "daterange": "Ungültiger Bereich der Datumsparameter"
     },
     "footer": "Dies ist Ihre Fußzeile"
 }

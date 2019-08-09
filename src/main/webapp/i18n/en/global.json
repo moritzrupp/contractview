@@ -134,9 +134,7 @@
         "emailexists": "Email is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID",
         "idnull": "Invalid ID",
-        "dateformat": "Invalid date format",
-        "monthformat": "Invalid month format",
-        "yearformat": "Invalid year format"
+      "dateformat": "Invalid date format"
     },
     "footer": "This is your footer"
 }

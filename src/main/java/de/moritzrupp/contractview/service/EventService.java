@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
-import java.time.*;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,20 +25,13 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public List<EventDTO> getAllContractsAsEvents(@NotNull Year year, Month month) {
+    public List<EventDTO> getAllContractsAsEvents(@NotNull Instant start, @NotNull Instant end) {
 
-        if(year == null) {
-            throw new IllegalArgumentException("Year cannot be null.");
+        if (start == null || end == null) {
+            throw new IllegalArgumentException("start or end cannot be null.");
         }
 
-        LocalDate dateStart = LocalDate.of(year.getValue(), (month != null ? month : Month.JANUARY), 1);
-        LocalDate dateEnd = LocalDate.of(year.getValue(), (month != null ? month : Month.DECEMBER),
-            (month != null ? month.length(year.isLeap()) : Month.DECEMBER.length(year.isLeap())));
-
-        Instant start = dateStart.atStartOfDay().toInstant(ZoneOffset.UTC);
-        Instant end = dateEnd.atStartOfDay().toInstant(ZoneOffset.UTC);
-
         return this.contractRepository.findAllByContractEndIsBetween(start, end)
-            .stream().map(contract -> EventMapper.INSTANCE.contractToEventDTO(contract)).collect(Collectors.toList());
+            .stream().map(EventMapper.INSTANCE::contractToEventDTO).collect(Collectors.toList());
     }
 }

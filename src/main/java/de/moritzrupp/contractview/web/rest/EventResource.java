@@ -1,22 +1,18 @@
 package de.moritzrupp.contractview.web.rest;
 
-import de.moritzrupp.contractview.repository.ContractRepository;
 import de.moritzrupp.contractview.service.EventService;
 import de.moritzrupp.contractview.service.dto.EventDTO;
 import de.moritzrupp.contractview.web.rest.errors.BadRequestAlertException;
-import io.github.jhipster.web.util.ResponseUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Month;
-import java.time.Year;
+import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -27,7 +23,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class EventResource {
 
-    private final Logger log = LoggerFactory.getLogger(ContractResource.class);
+    private final Logger log = LoggerFactory.getLogger(EventResource.class);
 
     private static final String ENTITY_NAME = "contract";
 
@@ -44,39 +40,19 @@ public class EventResource {
      */
     @GetMapping("/events")
     @Timed
-    public ResponseEntity<List<EventDTO>> getEvents() {
-        return this.getEvents(Year.now().toString());
-    }
-
-    @GetMapping("/events/{year}")
-    @Timed
-    public ResponseEntity<List<EventDTO>> getEvents(@PathVariable String year) {
-        return this.getEvents(year, null);
-    }
-
-    @GetMapping("/events/{year}/{month}")
-    @Timed
-    public ResponseEntity<List<EventDTO>> getEvents(@PathVariable String year, @PathVariable String month) {
+    public ResponseEntity<List<EventDTO>> getEvents(@RequestParam String from, @RequestParam String to) {
         try {
-            if(month != null) {
-                int monthInt = 0;
 
-                monthInt = Integer.parseInt(month);
-                if (!(1 <= monthInt && monthInt <= 12)) {
-                    throw new NumberFormatException();
-                }
+            Instant start = Instant.parse(from);
+            Instant end = Instant.parse(to);
 
-            }
-            Month m = month != null ? Month.of(Integer.parseInt(month)) : null;
-            Year y = Year.parse(year);
+            log.debug("REST request to get the events between " + start.toString() + " and " + end.toString());
 
-            log.debug("REST request to get the events of " + year + (m != null ? "-" + m.getValue() : ""));
-
-            return ResponseEntity.ok(eventService.getAllContractsAsEvents(y, m));
-        } catch (NumberFormatException nfe) {
-            throw new BadRequestAlertException("The format of the month must be a valid (optionally zero-leading) integer from 1-12", ENTITY_NAME, "monthformat");
-        } catch (DateTimeParseException dtpe) {
-            throw new BadRequestAlertException("The format of the year must be a valid year", ENTITY_NAME, "yearformat");
+            return ResponseEntity.ok(eventService.getAllContractsAsEvents(start, end));
+        } catch (DateTimeParseException ex) {
+            throw new BadRequestAlertException("The dates " + from + "/" + to + " must represent " +
+                "valid instants in UTC and are parsed using DateTimeFormatter.ISO_INSTANT", ENTITY_NAME,
+                "dateformat");
         }
     }
 }

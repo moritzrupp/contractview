@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { Moment } from 'moment';
-import { log } from 'react-jhipster';
 
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 import { IEvent } from 'app/shared/model/event.model';
 import { IGetEvents } from 'app/shared/reducers/action-type';
 import { defaultValue } from 'app/shared/model/provider.model';
@@ -63,21 +62,11 @@ const apiUrl = 'api/events';
 
 // Actions
 
-export const getEntities: IGetEvents<IEvent> = (year?: string, month?: string, from?: Moment, to?: Moment) => {
-  const params = `${
-    from && to
-      ? `?from=${from.toISOString()}&to=${to.toISOString()}`
-      : from && !to
-        ? `?from=${from.toISOString()}`
-        : !from && to
-          ? `?to=${to.toISOString()}`
-          : ''
-  }`;
-  log('params:', params);
-  const requestUrl = `${apiUrl}${year ? `/${year}` : ''}${year && month ? `/${month}` : ''}`;
+export const getEntities: IGetEvents<IEvent> = (from: Moment, to: Moment) => {
+  const requestUrl = `${apiUrl}?from=${from.toISOString()}&to=${to.toISOString()}`;
   return {
     type: ACTION_TYPES.FETCH_EVENT_LIST,
-    payload: axios.get<IEvent>(`${requestUrl}${params ? `${params}&` : '?'}cacheBuster=${new Date().getTime()}`)
+    payload: axios.get<IEvent>(`${requestUrl}&cacheBuster=${new Date().getTime()}`)
   };
 };
 
