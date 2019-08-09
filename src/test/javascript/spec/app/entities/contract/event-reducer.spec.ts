@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 import configureStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
@@ -126,7 +127,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(getEntities(moment(), moment())).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.RESET actions', async () => {
