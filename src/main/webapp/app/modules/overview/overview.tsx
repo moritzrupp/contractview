@@ -9,7 +9,7 @@ import moment from 'moment';
 
 import { Translate, translate } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Col, Popover, PopoverBody, PopoverHeader, Row } from 'reactstrap';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getEntities } from 'app/entities/contract/event.reducer';
@@ -40,8 +40,6 @@ export class Overview extends React.Component<IOverviewProp> {
 
   getEntities = (currentDate: Date) => {
     this.props.getEntities(
-      currentDate.getFullYear().toString(),
-      null,
       moment(dates.firstVisibleDay(currentDate, this.localizer)),
       moment(dates.lastVisibleDay(currentDate, this.localizer))
     );
@@ -157,7 +155,9 @@ const mapStateToProps = ({ locale, event }: IRootState) => ({
     title: c.title,
     start: c.contractEnd,
     end: c.contractEnd,
-    allDay: true
+    allDay: true,
+    contractStart: c.contractStart,
+    contractEnd: c.contractEnd
   }))
 });
 
