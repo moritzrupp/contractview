@@ -70,8 +70,9 @@ export class Contract extends React.Component<IContractProps, IContractState> {
         <h2 id="contract-heading">
           <Translate contentKey="contractviewApp.contract.home.title">Contracts</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="contractviewApp.contract.home.createLabel">Create new Contract</Translate>
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
+            <Translate contentKey="contractviewApp.contract.home.createLabel">Create a new Contract</Translate>
           </Link>
         </h2>
         <div className="table-responsive">
@@ -83,107 +84,116 @@ export class Contract extends React.Component<IContractProps, IContractState> {
             threshold={0}
             initialLoad={false}
           >
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th className="hand" onClick={this.sort('id')}>
-                    <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('name')}>
-                    <Translate contentKey="contractviewApp.contract.name">Name</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('contactEmail')}>
-                    <Translate contentKey="contractviewApp.contract.contactEmail">Contact Email</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('price')}>
-                    <Translate contentKey="contractviewApp.contract.price">Price</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('billingPeriodDays')}>
-                    <Translate contentKey="contractviewApp.contract.billingPeriodDays">Billing Period Days</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('contractStart')}>
-                    <Translate contentKey="contractviewApp.contract.contractStart">Contract Start</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('contractEnd')}>
-                    <Translate contentKey="contractviewApp.contract.contractEnd">Contract End</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('automaticExtension')}>
-                    <Translate contentKey="contractviewApp.contract.automaticExtension">Automatic Extension</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('extensionPeriodDays')}>
-                    <Translate contentKey="contractviewApp.contract.extensionPeriodDays">Extension Period Days</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('extensionReminder')}>
-                    <Translate contentKey="contractviewApp.contract.extensionReminder">Extension Reminder</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('extensionReminderPeriodDays')}>
-                    <Translate contentKey="contractviewApp.contract.extensionReminderPeriodDays">Extension Reminder Period Days</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="contractviewApp.contract.provider">Provider</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="contractviewApp.contract.owner">Owner</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {contractList.map((contract, i) => (
-                  <tr key={`entity-${i}`}>
-                    <td>
-                      <Button tag={Link} to={`${match.url}/${contract.id}`} color="link" size="sm">
-                        {contract.id}
-                      </Button>
-                    </td>
-                    <td>{contract.name}</td>
-                    <td>{contract.contactEmail}</td>
-                    <td>{contract.price}</td>
-                    <td>{contract.billingPeriodDays}</td>
-                    <td>
-                      <TextFormat type="date" value={contract.contractStart} format={APP_DATE_FORMAT} />
-                    </td>
-                    <td>
-                      <TextFormat type="date" value={contract.contractEnd} format={APP_DATE_FORMAT} />
-                    </td>
-                    <td>{contract.automaticExtension ? 'true' : 'false'}</td>
-                    <td>{contract.extensionPeriodDays}</td>
-                    <td>{contract.extensionReminder ? 'true' : 'false'}</td>
-                    <td>{contract.extensionReminderPeriodDays}</td>
-                    <td>{contract.provider ? <Link to={`provider/${contract.provider.id}`}>{contract.provider.name}</Link> : ''}</td>
-                    <td>{contract.owner ? contract.owner.login : ''}</td>
-                    <td className="text-right">
-                      <div className="btn-group flex-btn-group-container">
-                        <Button tag={Link} to={`${match.url}/${contract.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.view">View</Translate>
-                          </span>
-                        </Button>
-                        <Button tag={Link} to={`${match.url}/${contract.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.edit">Edit</Translate>
-                          </span>
-                        </Button>
-                        <Button tag={Link} to={`${match.url}/${contract.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.delete">Delete</Translate>
-                          </span>
-                        </Button>
-                      </div>
-                    </td>
+            {contractList && contractList.length > 0 ? (
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th className="hand" onClick={this.sort('id')}>
+                      <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('name')}>
+                      <Translate contentKey="contractviewApp.contract.name">Name</Translate> <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('contactEmail')}>
+                      <Translate contentKey="contractviewApp.contract.contactEmail">Contact Email</Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('price')}>
+                      <Translate contentKey="contractviewApp.contract.price">Price</Translate> <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('billingPeriodDays')}>
+                      <Translate contentKey="contractviewApp.contract.billingPeriodDays">Billing Period Days</Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('contractStart')}>
+                      <Translate contentKey="contractviewApp.contract.contractStart">Contract Start</Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('contractEnd')}>
+                      <Translate contentKey="contractviewApp.contract.contractEnd">Contract End</Translate> <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('automaticExtension')}>
+                      <Translate contentKey="contractviewApp.contract.automaticExtension">Automatic Extension</Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('extensionPeriodDays')}>
+                      <Translate contentKey="contractviewApp.contract.extensionPeriodDays">Extension Period Days</Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('extensionReminder')}>
+                      <Translate contentKey="contractviewApp.contract.extensionReminder">Extension Reminder</Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th className="hand" onClick={this.sort('extensionReminderPeriodDays')}>
+                      <Translate contentKey="contractviewApp.contract.extensionReminderPeriodDays">
+                        Extension Reminder Period Days
+                      </Translate>{' '}
+                      <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th>
+                      <Translate contentKey="contractviewApp.contract.provider">Provider</Translate> <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th>
+                      <Translate contentKey="contractviewApp.contract.owner">Owner</Translate> <FontAwesomeIcon icon="sort" />
+                    </th>
+                    <th />
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {contractList.map((contract, i) => (
+                    <tr key={`entity-${i}`}>
+                      <td>
+                        <Button tag={Link} to={`${match.url}/${contract.id}`} color="link" size="sm">
+                          {contract.id}
+                        </Button>
+                      </td>
+                      <td>{contract.name}</td>
+                      <td>{contract.contactEmail}</td>
+                      <td>{contract.price}</td>
+                      <td>{contract.billingPeriodDays}</td>
+                      <td>
+                        <TextFormat type="date" value={contract.contractStart} format={APP_DATE_FORMAT} />
+                      </td>
+                      <td>
+                        <TextFormat type="date" value={contract.contractEnd} format={APP_DATE_FORMAT} />
+                      </td>
+                      <td>{contract.automaticExtension ? 'true' : 'false'}</td>
+                      <td>{contract.extensionPeriodDays}</td>
+                      <td>{contract.extensionReminder ? 'true' : 'false'}</td>
+                      <td>{contract.extensionReminderPeriodDays}</td>
+                      <td>{contract.provider ? <Link to={`provider/${contract.provider.id}`}>{contract.provider.name}</Link> : ''}</td>
+                      <td>{contract.owner ? contract.owner.login : ''}</td>
+                      <td className="text-right">
+                        <div className="btn-group flex-btn-group-container">
+                          <Button tag={Link} to={`${match.url}/${contract.id}`} color="info" size="sm">
+                            <FontAwesomeIcon icon="eye" />{' '}
+                            <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.view">View</Translate>
+                            </span>
+                          </Button>
+                          <Button tag={Link} to={`${match.url}/${contract.id}/edit`} color="primary" size="sm">
+                            <FontAwesomeIcon icon="pencil-alt" />{' '}
+                            <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.edit">Edit</Translate>
+                            </span>
+                          </Button>
+                          <Button tag={Link} to={`${match.url}/${contract.id}/delete`} color="danger" size="sm">
+                            <FontAwesomeIcon icon="trash" />{' '}
+                            <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.delete">Delete</Translate>
+                            </span>
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <div className="alert alert-warning">
+                <Translate contentKey="contractviewApp.contract.home.notFound">No Contracts found</Translate>
+              </div>
+            )}
           </InfiniteScroll>
         </div>
       </div>

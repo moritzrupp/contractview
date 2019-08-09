@@ -2,7 +2,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
         Added the constraints for entity Contract.
     -->
@@ -20,11 +20,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="contracts_id"
+        <addForeignKeyConstraint baseColumnNames="contract_id"
                                  baseTableName="contract_users"
-                                 constraintName="fk_contract_users_contracts_id"
+                                 constraintName="fk_contract_users_contract_id"
                                  referencedColumnNames="id"
                                  referencedTableName="contract"/>
+
         <addForeignKeyConstraint baseColumnNames="users_id"
                                  baseTableName="contract_users"
                                  constraintName="fk_contract_users_users_id"

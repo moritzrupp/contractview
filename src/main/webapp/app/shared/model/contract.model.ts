@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { IProvider } from 'app/shared/model//provider.model';
+import { IProvider } from 'app/shared/model/provider.model';
 import { IUser } from 'app/shared/model/user.model';
 
 export interface IContract {

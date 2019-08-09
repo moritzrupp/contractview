@@ -4,7 +4,7 @@
       "packageName": "de.moritzrupp.contractview",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "5.5.0",
+    "jhipsterVersion": "6.2.0",
     "applicationType": "monolith",
     "baseName": "contractview",
     "packageName": "de.moritzrupp.contractview",
@@ -31,11 +31,12 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": [
-      "en",
-      "de"
-    ],
+    "languages": ["en", "de"],
     "herokuAppName": "contractview",
-    "herokuDeployType": "jar"
+    "herokuDeployType": "jar",
+    "clientTheme": "none",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "blueprints": []
   }
 }

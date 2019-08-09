@@ -1,5 +1,4 @@
 package de.moritzrupp.contractview.domain;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -11,7 +10,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Contract.
@@ -72,18 +70,18 @@ public class Contract implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("contracts")
     private Provider provider;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("contracts")
     private User owner;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "contract_users",
-               joinColumns = @JoinColumn(name = "contracts_id", referencedColumnName = "id"),
+               joinColumns = @JoinColumn(name = "contract_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
     private Set<User> users = new HashSet<>();
 
@@ -263,13 +261,11 @@ public class Contract implements Serializable {
 
     public Contract addUsers(User user) {
         this.users.add(user);
-        user.getContracts().add(this);
         return this;
     }
 
     public Contract removeUsers(User user) {
         this.users.remove(user);
-        user.getContracts().remove(this);
         return this;
     }
 
@@ -283,19 +279,15 @@ public class Contract implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Contract)) {
             return false;
         }
-        Contract contract = (Contract) o;
-        if (contract.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), contract.getId());
+        return id != null && id.equals(((Contract) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
