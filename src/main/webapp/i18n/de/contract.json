@@ -1,0 +1,34 @@
+
+{
+    "contractviewApp": {
+        "contract" : {
+            "home": {
+                "title": "Contracts",
+                "createLabel": "Contract erstellen",
+                "createOrEditLabel": "Contract erstellen oder bearbeiten"
+            },
+            "created": "Contract erstellt mit ID {{ param }}",
+            "updated": "Contract aktualisiert mit ID {{ param }}",
+            "deleted": "Contract gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Contract {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Contract"
+            },
+            "name": "Name",
+            "contactEmail": "Contact Email",
+            "price": "Price",
+            "billingPeriodDays": "Billing Period Days",
+            "contractStart": "Contract Start",
+            "contractEnd": "Contract End",
+            "automaticExtension": "Automatic Extension",
+            "extensionPeriodDays": "Extension Period Days",
+            "extensionReminder": "Extension Reminder",
+            "extensionReminderPeriodDays": "Extension Reminder Period Days",
+            "provider": "Provider",
+            "owner": "Owner",
+            "users": "Users"
+        }
+    }
+}

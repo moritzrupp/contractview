@@ -1,0 +1,23 @@
+
+{
+    "contractviewApp": {
+        "provider" : {
+            "home": {
+                "title": "Providers",
+                "createLabel": "Provider erstellen",
+                "createOrEditLabel": "Provider erstellen oder bearbeiten"
+            },
+            "created": "Provider erstellt mit ID {{ param }}",
+            "updated": "Provider aktualisiert mit ID {{ param }}",
+            "deleted": "Provider gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Provider {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Provider"
+            },
+            "name": "Name",
+            "website": "Website"
+        }
+    }
+}
