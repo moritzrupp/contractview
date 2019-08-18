@@ -70,12 +70,13 @@ export default (state: ContractState = initialState, action): ContractState => {
       };
     case SUCCESS(ACTION_TYPES.FETCH_CONTRACT_LIST):
       const links = parseHeaderForLinks(action.payload.headers.link);
+
       return {
         ...state,
-        links,
         loading: false,
-        totalItems: action.payload.headers['x-total-count'],
-        entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links)
+        links,
+        entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links),
+        totalItems: parseInt(action.payload.headers['x-total-count'], 10)
       };
     case SUCCESS(ACTION_TYPES.FETCH_CONTRACT):
       return {

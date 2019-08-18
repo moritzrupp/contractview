@@ -1,34 +1,34 @@
-
 {
-    "contractviewApp": {
-        "contract" : {
-            "home": {
-                "title": "Verträge",
-                "createLabel": "Vertrag erstellen",
-                "createOrEditLabel": "Vertrag erstellen oder bearbeiten"
-            },
-            "created": "Vertrag erstellt mit ID {{ param }}",
-            "updated": "Vertrag aktualisiert mit ID {{ param }}",
-            "deleted": "Vertrag gelöscht mit ID {{ param }}",
-            "delete": {
-                "question": "Soll Vertrag {{ id }} wirklich dauerhaft gelöscht werden?"
-            },
-            "detail": {
-                "title": "Vertrag"
-            },
-            "name": "Name",
-            "contactEmail": "Kontakt Email",
-            "price": "Preis",
-            "billingPeriodDays": "Zahlungsturnus in Tagen",
-            "contractStart": "Vertragsbeginn",
-            "contractEnd": "Vertragsende",
-            "automaticExtension": "Automatische Verlängerung",
-            "extensionPeriodDays": "Vertragsverlängerung in Tagen",
-            "extensionReminder": "Verlängerungserinnerung",
-            "extensionReminderPeriodDays": "Verlängerungserinnerung in Tagen",
-            "provider": "Vertragsanbieter",
-            "owner": "Vertragsnehmer",
-            "users": "Vertragsnutzer"
-        }
+  "contractviewApp": {
+    "contract": {
+      "home": {
+        "title": "Verträge",
+        "createLabel": "Vertrag erstellen",
+        "createOrEditLabel": "Vertrag erstellen oder bearbeiten",
+        "notFound": "Keine Verträge gefunden"
+      },
+      "created": "Vertrag erstellt mit ID {{ param }}",
+      "updated": "Vertrag aktualisiert mit ID {{ param }}",
+      "deleted": "Vertrag gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Vertrag {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Vertrag"
+      },
+      "name": "Name",
+      "contactEmail": "Kontakt Email",
+      "price": "Preis",
+      "billingPeriodDays": "Zahlungsturnus in Tagen",
+      "contractStart": "Vertragsbeginn",
+      "contractEnd": "Vertragsende",
+      "automaticExtension": "Automatische Verlängerung",
+      "extensionPeriodDays": "Vertragsverlängerung in Tagen",
+      "extensionReminder": "Verlängerungserinnerung",
+      "extensionReminderPeriodDays": "Verlängerungserinnerung in Tagen",
+      "provider": "Vertragsanbieter",
+      "owner": "Vertragsnehmer",
+      "users": "Vertragsnutzer"
     }
+  }
 }

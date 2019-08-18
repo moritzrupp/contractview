@@ -3,8 +3,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import React from 'react';
 import { Redirect } from 'react-router';
-import BigCalendar from 'react-big-calendar';
-import dates from 'react-big-calendar/lib/utils/dates';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { firstVisibleDay, lastVisibleDay } from 'react-big-calendar/lib/utils/dates';
 import moment from 'moment';
 
 import { Translate, translate } from 'react-jhipster';
@@ -26,7 +26,7 @@ const defaultEventPopover = {
 };
 
 export class Overview extends React.Component<IOverviewProp> {
-  localizer = BigCalendar.momentLocalizer(moment);
+  localizer = momentLocalizer(moment);
 
   state = {
     eventId: null,
@@ -39,10 +39,7 @@ export class Overview extends React.Component<IOverviewProp> {
   }
 
   getEntities = (currentDate: Date) => {
-    this.props.getEntities(
-      moment(dates.firstVisibleDay(currentDate, this.localizer)),
-      moment(dates.lastVisibleDay(currentDate, this.localizer))
-    );
+    this.props.getEntities(moment(firstVisibleDay(currentDate, this.localizer)), moment(lastVisibleDay(currentDate, this.localizer)));
   };
 
   onNavigate = (date: Date) => {
@@ -113,7 +110,7 @@ export class Overview extends React.Component<IOverviewProp> {
 
           {popover}
           <div className="rbc-calendar">
-            <BigCalendar
+            <Calendar
               events={eventList}
               views={['month', 'week', 'agenda']}
               localizer={this.localizer}

@@ -14,7 +14,6 @@ import java.util.Optional;
 /**
  * Spring Data  repository for the Contract entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
 
@@ -27,7 +26,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
         countQuery = "select count(distinct contract) from Contract contract")
     Page<Contract> findAllWithEagerRelationships(Pageable pageable);
 
-    @Query(value = "select distinct contract from Contract contract left join fetch contract.users")
+    @Query("select distinct contract from Contract contract left join fetch contract.users")
     List<Contract> findAllWithEagerRelationships();
 
     @Query("select contract from Contract contract left join fetch contract.users where contract.id =:id")

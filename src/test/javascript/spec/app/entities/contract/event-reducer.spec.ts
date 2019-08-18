@@ -112,7 +112,7 @@ describe('Entities reducer tests', () => {
 
     const resolvedObject = { value: 'whatever' };
     beforeEach(() => {
-      const mockStore = configureStore([thunk, promiseMiddleware()]);
+      const mockStore = configureStore([thunk, promiseMiddleware]);
       store = mockStore({});
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
     });

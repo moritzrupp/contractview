@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - README updated with relevant content, license information, Travis CI and SonarCloud badges
+- Update JHipster to version 6.2.0
 
 ## [0.1.0] - 2018-10-20
 
@@ -28,5 +29,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - This CHANGELOG file to hopefully serve as an evolving example of a
   standardized open source project CHANGELOG.
 
-[Unreleased]: https://github.com/moritzrupp/contractview/compare/0.1.0...HEAD
+[unreleased]: https://github.com/moritzrupp/contractview/compare/0.1.0...HEAD
 [0.1.0]: https://github.com/moritzrupp/contractview/releases/tag/0.1.0
