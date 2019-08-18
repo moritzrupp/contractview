@@ -5,15 +5,13 @@ import de.moritzrupp.contractview.domain.Contract;
 import de.moritzrupp.contractview.repository.ContractRepository;
 import de.moritzrupp.contractview.service.EventService;
 import de.moritzrupp.contractview.web.rest.errors.ExceptionTranslator;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the EventResource REST controller.
- *
- * @see EventResource
+ * Integration tests for the {@link EventResource} REST controller.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = ContractviewApp.class)
 public class EventResourceIntTest {
 
@@ -54,7 +49,7 @@ public class EventResourceIntTest {
 
     private Contract contract;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final EventResource eventResource = new EventResource(eventService);
@@ -71,10 +66,10 @@ public class EventResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Contract createEntity(EntityManager em) {
-        return ContractResourceIntTest.createEntity(em);
+        return ContractResourceIT.createEntity(em);
     }
 
-    @Before
+    @BeforeEach
     public void initTest() {
         contract = createEntity(em);
     }

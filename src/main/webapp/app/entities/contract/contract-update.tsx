@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,7 @@ import { getUsers } from 'app/modules/administration/user-management/user-manage
 import { getEntity, updateEntity, createEntity, reset } from './contract.reducer';
 import { IContract } from 'app/shared/model/contract.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IContractUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -54,8 +54,8 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
   }
 
   saveEntity = (event, errors, values) => {
-    values.contractStart = new Date(values.contractStart);
-    values.contractEnd = new Date(values.contractEnd);
+    values.contractStart = convertDateTimeToServer(values.contractStart);
+    values.contractEnd = convertDateTimeToServer(values.contractEnd);
 
     if (errors.length === 0) {
       const { contractEntity } = this.props;
@@ -98,14 +98,14 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
               <AvForm model={isNew ? {} : contractEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
+                    <Label for="contract-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
                     <AvInput id="contract-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="nameLabel" for="name">
+                  <Label id="nameLabel" for="contract-name">
                     <Translate contentKey="contractviewApp.contract.name">Name</Translate>
                   </Label>
                   <AvField
@@ -118,13 +118,13 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="contactEmailLabel" for="contactEmail">
+                  <Label id="contactEmailLabel" for="contract-contactEmail">
                     <Translate contentKey="contractviewApp.contract.contactEmail">Contact Email</Translate>
                   </Label>
                   <AvField id="contract-contactEmail" type="text" name="contactEmail" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="priceLabel" for="price">
+                  <Label id="priceLabel" for="contract-price">
                     <Translate contentKey="contractviewApp.contract.price">Price</Translate>
                   </Label>
                   <AvField
@@ -140,7 +140,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="billingPeriodDaysLabel" for="billingPeriodDays">
+                  <Label id="billingPeriodDaysLabel" for="contract-billingPeriodDays">
                     <Translate contentKey="contractviewApp.contract.billingPeriodDays">Billing Period Days</Translate>
                   </Label>
                   <AvField
@@ -156,7 +156,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="contractStartLabel" for="contractStart">
+                  <Label id="contractStartLabel" for="contract-contractStart">
                     <Translate contentKey="contractviewApp.contract.contractStart">Contract Start</Translate>
                   </Label>
                   <AvInput
@@ -164,6 +164,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                     type="datetime-local"
                     className="form-control"
                     name="contractStart"
+                    placeholder={'YYYY-MM-DD HH:mm'}
                     value={isNew ? null : convertDateTimeFromServer(this.props.contractEntity.contractStart)}
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
@@ -171,7 +172,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="contractEndLabel" for="contractEnd">
+                  <Label id="contractEndLabel" for="contract-contractEnd">
                     <Translate contentKey="contractviewApp.contract.contractEnd">Contract End</Translate>
                   </Label>
                   <AvInput
@@ -179,6 +180,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                     type="datetime-local"
                     className="form-control"
                     name="contractEnd"
+                    placeholder={'YYYY-MM-DD HH:mm'}
                     value={isNew ? null : convertDateTimeFromServer(this.props.contractEntity.contractEnd)}
                   />
                 </AvGroup>
@@ -189,7 +191,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   </Label>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="extensionPeriodDaysLabel" for="extensionPeriodDays">
+                  <Label id="extensionPeriodDaysLabel" for="contract-extensionPeriodDays">
                     <Translate contentKey="contractviewApp.contract.extensionPeriodDays">Extension Period Days</Translate>
                   </Label>
                   <AvField
@@ -211,7 +213,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   </Label>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="extensionReminderPeriodDaysLabel" for="extensionReminderPeriodDays">
+                  <Label id="extensionReminderPeriodDaysLabel" for="contract-extensionReminderPeriodDays">
                     <Translate contentKey="contractviewApp.contract.extensionReminderPeriodDays">Extension Reminder Period Days</Translate>
                   </Label>
                   <AvField
@@ -227,7 +229,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="provider.name">
+                  <Label for="contract-provider">
                     <Translate contentKey="contractviewApp.contract.provider">Provider</Translate>
                   </Label>
                   <AvInput
@@ -236,6 +238,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                     className="form-control"
                     name="provider.id"
                     value={isNew ? providers[0] && providers[0].id : contractEntity.provider.id}
+                    required
                   >
                     {providers
                       ? providers.map(otherEntity => (
@@ -245,9 +248,12 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                         ))
                       : null}
                   </AvInput>
+                  <AvFeedback>
+                    <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                  </AvFeedback>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="owner.login">
+                  <Label for="contract-owner">
                     <Translate contentKey="contractviewApp.contract.owner">Owner</Translate>
                   </Label>
                   <AvInput
@@ -256,6 +262,7 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                     className="form-control"
                     name="owner.id"
                     value={isNew ? users[0] && users[0].id : contractEntity.owner.id}
+                    required
                   >
                     {users
                       ? users.map(otherEntity => (
@@ -265,9 +272,12 @@ export class ContractUpdate extends React.Component<IContractUpdateProps, IContr
                         ))
                       : null}
                   </AvInput>
+                  <AvFeedback>
+                    <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                  </AvFeedback>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="users">
+                  <Label for="contract-users">
                     <Translate contentKey="contractviewApp.contract.users">Users</Translate>
                   </Label>
                   <AvInput

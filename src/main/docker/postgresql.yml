@@ -1,11 +1,11 @@
 version: '2'
 services:
-    contractview-postgresql:
-        image: postgres:10.4
-        # volumes:
-        #     - ~/volumes/jhipster/contractview/postgresql/:/var/lib/postgresql/data/
-        environment:
-            - POSTGRES_USER=contractview
-            - POSTGRES_PASSWORD=
-        ports:
-            - 5432:5432
+  contractview-postgresql:
+    image: postgres:11.4
+    # volumes:
+    #     - ~/volumes/jhipster/contractview/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=contractview
+      - POSTGRES_PASSWORD=
+    ports:
+      - 5432:5432

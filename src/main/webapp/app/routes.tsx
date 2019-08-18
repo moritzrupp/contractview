@@ -13,6 +13,7 @@ import Overview from 'app/modules/overview/overview';
 import Entities from 'app/entities';
 import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
+import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 
 // tslint:disable:space-in-parens
@@ -29,8 +30,8 @@ const Admin = Loadable({
 
 const Routes = () => (
   <div className="view-routes">
-    <ErrorBoundaryRoute path="/login" component={Login} />
     <Switch>
+      <ErrorBoundaryRoute path="/login" component={Login} />
       <ErrorBoundaryRoute path="/logout" component={Logout} />
       <ErrorBoundaryRoute path="/register" component={Register} />
       <ErrorBoundaryRoute path="/activate/:key?" component={Activate} />
@@ -40,7 +41,8 @@ const Routes = () => (
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/overview" component={Overview} hasAnyAuthorities={[AUTHORITIES.USER]} />
-      <ErrorBoundaryRoute path="/" component={Home} />
+      <ErrorBoundaryRoute path="/" exact component={Home} />
+      <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>
   </div>
 );
